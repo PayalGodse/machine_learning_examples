@@ -11,9 +11,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.utils import shuffle
 
+dir = 'C:/Users/jstep/PycharmProjects/machine_learning_examples/recommenders/movielens_lp/'
+
 # load in the data
 # https://www.kaggle.com/grouplens/movielens-20m-dataset
-df = pd.read_csv('../large_files/movielens-20m-dataset/very_small_rating.csv')
+df = pd.read_csv(dir+'very_small_rating.csv')
 
 N = df.userId.max() + 1 # number of users
 M = df.movie_idx.max() + 1 # number of movies
@@ -69,14 +71,14 @@ def update_usermovie2rating_test(row):
 df_test.apply(update_usermovie2rating_test, axis=1)
 
 # note: these are not really JSONs
-with open('user2movie.json', 'wb') as f:
+with open(dir+'user2movie.json', 'wb') as f:
   pickle.dump(user2movie, f)
 
-with open('movie2user.json', 'wb') as f:
+with open(dir+'movie2user.json', 'wb') as f:
   pickle.dump(movie2user, f)
 
-with open('usermovie2rating.json', 'wb') as f:
+with open(dir+'usermovie2rating.json', 'wb') as f:
   pickle.dump(usermovie2rating, f)
 
-with open('usermovie2rating_test.json', 'wb') as f:
+with open(dir+'usermovie2rating_test.json', 'wb') as f:
   pickle.dump(usermovie2rating_test, f)

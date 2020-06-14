@@ -11,26 +11,27 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.utils import shuffle
 from datetime import datetime
+dir = 'C:/Users/jstep/PycharmProjects/machine_learning_examples/recommenders/movielens_lp/'
 
 # load in the data
 import os
-if not os.path.exists('user2movie.json') or \
-   not os.path.exists('movie2user.json') or \
-   not os.path.exists('usermovie2rating.json') or \
-   not os.path.exists('usermovie2rating_test.json'):
+if not os.path.exists(dir+'user2movie.json') or \
+   not os.path.exists(dir+'movie2user.json') or \
+   not os.path.exists(dir+'usermovie2rating.json') or \
+   not os.path.exists(dir+'usermovie2rating_test.json'):
    import preprocess2dict
 
 
-with open('user2movie.json', 'rb') as f:
+with open(dir+'user2movie.json', 'rb') as f:
   user2movie = pickle.load(f)
 
-with open('movie2user.json', 'rb') as f:
+with open(dir+'movie2user.json', 'rb') as f:
   movie2user = pickle.load(f)
 
-with open('usermovie2rating.json', 'rb') as f:
+with open(dir+'usermovie2rating.json', 'rb') as f:
   usermovie2rating = pickle.load(f)
 
-with open('usermovie2rating_test.json', 'rb') as f:
+with open(dir+'usermovie2rating_test.json', 'rb') as f:
   usermovie2rating_test = pickle.load(f)
 
 
@@ -52,12 +53,18 @@ mu = np.mean(list(usermovie2rating.values()))
 
 # prediction[i,j] = W[i].dot(U[j]) + b[i] + c.T[j] + mu
 
+chk1 = np.array([1, 2, 3])
+chk2 = np.array([4, 5, 6])
+
+chk1.dot(chk2)
+
 def get_loss(d):
   # d: (user_id, movie_id) -> rating
   N = float(len(d))
   sse = 0
   for k, r in d.items():
     i, j = k
+    # i = user, j = movie, k = rating
     p = W[i].dot(U[j]) + b[i] + c[j] + mu
     sse += (p - r)*(p - r)
   return sse / N
